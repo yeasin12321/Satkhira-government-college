@@ -1,3 +1,37 @@
+// URL থেকে পেজ নাম বের করে সেই পেজে রিডাইরেক্ট
+document.addEventListener('DOMContentLoaded', function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const page = urlParams.get('page');
+  if (page) {
+    // পেজ অনুযায়ী কন্টেন্ট লোড করা
+    loadPageContent(page);
+  }
+});
+
+function loadPageContent(page) {
+  // পেজ নাম থেকে এক্সটেনশন বাদ দিয়ে ম্যাচিং
+  const pageMap = {
+    '/at-a-glance': showAtAGlance,
+    '/history': showHistory,
+    '/teachers': showTeachers,
+    '/principal': showPrincipal,
+    '/vice-principal': showVicePrincipal,
+    '/notice-board': showNoticeBoard,
+    '/gallery': showGallery,
+    '/contact': showContact,
+    '/academic': showAcademic,
+    '/admission': showAdmission,
+    '/admin-login': showAdminLogin,
+    '/admin-panel': showAdminPanel
+  };
+  
+  const cleanPage = page.replace('.html', '');
+  if (pageMap[cleanPage]) {
+    // main-content ডিভের মধ্যে কন্টেন্ট দেখান
+    document.querySelector('.container .row').style.display = 'none';
+    // ... বা আপনার পছন্দমত লজিক
+  }
+}
 // ============================================================
 // APPLICATION LOGIC - Satkhira Government College Clone
 // Handles all dynamic rendering across pages
