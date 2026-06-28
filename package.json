@@ -1,7 +1,7 @@
 {
   "name": "satkhira-govt-college",
-  "version": "1.0.0",
-  "description": "Satkhira Government College Website",
+  "version": "2.0.0",
+  "description": "Satkhira Government College - Full Stack Website",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
