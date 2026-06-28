@@ -1,97 +1,11 @@
 // ============================================================
-// DATA LAYER - সার্ভার API ব্যবহার করে (সব ইউজারের জন্য কমন)
-// ডাটা data.json ফাইলে সংরক্ষিত হয়, localStorage নয়
+// DATA LAYER - হাইব্রিড মোড (API + লোকালস্টোরেজ ফলব্যাক)
+// API কাজ করলে সার্ভার থেকে, না করলে localStorage থেকে ডাটা
 // ============================================================
 
 const API_BASE = '/api';
 
-// ===== API কল ফাংশন =====
-async function apiGet(path) {
-  try {
-    const res = await fetch(`${API_BASE}${path}`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } catch(e) {
-    console.error('API GET Error:', e);
-    return null;
-  }
-}
-
-async function apiPost(path, data) {
-  try {
-    const res = await fetch(`${API_BASE}${path}`, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer admin123'
-      },
-      body: JSON.stringify(data)
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } catch(e) {
-    console.error('API POST Error:', e);
-    return null;
-  }
-}
-
-async function apiDelete(path) {
-  try {
-    const res = await fetch(`${API_BASE}${path}`, {
-      method: 'DELETE',
-      headers: { 'Authorization': 'Bearer admin123' }
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } catch(e) {
-    console.error('API DELETE Error:', e);
-    return null;
-  }
-}
-
-// ===== ডাটা স্টোর =====
-let cachedData = null;
-let dataLoadPromise = null;
-
-// ===== সব ডাটা লোড =====
-async function loadData(forceRefresh = false) {
-  // যদি আগেই লোড হয়ে থাকে এবং forceRefresh না হয়, ক্যাশ থেকে দিন
-  if (cachedData && !forceRefresh) return cachedData;
-  
-  // যদি লোডিং প্রক্রিয়া চালু থাকে, সেইটাই রিটার্ন করুন
-  if (dataLoadPromise) return dataLoadPromise;
-  
-  // নতুন লোড শুরু করুন
-  dataLoadPromise = (async () => {
-    try {
-      const data = await apiGet('/data');
-      if (data) {
-        cachedData = data;
-        return data;
-      }
-      // Fallback: যদি API কাজ না করে, লোকাল ডিফল্ট ব্যবহার করুন
-      console.warn('API not available, using localStorage fallback');
-      return getLocalFallback();
-    } catch(e) {
-      console.error('Data load failed:', e);
-      return getLocalFallback();
-    } finally {
-      dataLoadPromise = null;
-    }
-  })();
-  
-  return dataLoadPromise;
-}
-
-// লোকালস্টোরেজ ফলব্যাক (API ডাউন থাকলে)
-function getLocalFallback() {
-  try {
-    const local = localStorage.getItem('sgc_all_data');
-    if (local) return JSON.parse(local);
-  } catch(e) {}
-  return getDefaultData();
-}
-
+// ===== ডিফল্ট ডাটা =====
 function getDefaultData() {
   return {
     notices: [
@@ -156,9 +70,109 @@ function getDefaultData() {
   };
 }
 
-// ===== জেনেরিক ডাটা গেট =====
+// ===== লোকাল ডাটা ম্যানেজমেন্ট (সবসময় কাজ করবে) =====
+function initLocalData() {
+  if (!localStorage.getItem('sgc_init_done')) {
+    const defaults = getDefaultData();
+    localStorage.setItem('sgc_init_done', 'true');
+    Object.keys(defaults).forEach(key => {
+      try {
+        const existing = localStorage.getItem('sgc_' + key);
+        if (!existing) {
+          localStorage.setItem('sgc_' + key, JSON.stringify(defaults[key]));
+        }
+      } catch(e) {}
+    });
+  }
+}
+
+function getLocalData(key) {
+  try {
+    const val = localStorage.getItem('sgc_' + key);
+    if (val) return JSON.parse(val);
+  } catch(e) {}
+  return null;
+}
+
+function setLocalData(key, val) {
+  try {
+    localStorage.setItem('sgc_' + key, JSON.stringify(val));
+  } catch(e) {}
+}
+
+// ===== API কল (যদি কাজ করে) =====
+async function apiGet(path) {
+  try {
+    const res = await fetch(`${API_BASE}${path}`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch(e) {
+    return null;
+  }
+}
+
+async function apiPost(path, data) {
+  try {
+    const res = await fetch(`${API_BASE}${path}`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer admin123'
+      },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch(e) {
+    return null;
+  }
+}
+
+async function apiDelete(path) {
+  try {
+    const res = await fetch(`${API_BASE}${path}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer admin123' }
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch(e) {
+    return null;
+  }
+}
+
+// ===== মেইন লোড ফাংশন =====
+let allData = null;
+
+async function loadData(forceRefresh = false) {
+  initLocalData();
+  
+  // API থেকে লোড করার চেষ্টা
+  try {
+    const apiData = await apiGet('/data');
+    if (apiData) {
+      allData = apiData;
+      // API ডাটা localStorage-এও ব্যাকআপ করুন
+      Object.keys(apiData).forEach(key => {
+        setLocalData(key, apiData[key]);
+      });
+      return apiData;
+    }
+  } catch(e) {}
+  
+  // API কাজ না করলে localStorage থেকে লোড
+  const defaults = getDefaultData();
+  const data = {};
+  Object.keys(defaults).forEach(key => {
+    data[key] = getLocalData(key) || defaults[key];
+  });
+  allData = data;
+  return data;
+}
+
 function getData(key) {
-  return cachedData ? cachedData[key] : null;
+  if (allData && allData[key]) return allData[key];
+  return getLocalData(key) || getDefaultData()[key];
 }
 
 // ===== নোটিশ CRUD =====
@@ -171,28 +185,23 @@ async function addNotice(notice) {
   const notices = await getNotices();
   notice.id = Date.now();
   notices.unshift(notice);
-  const result = await apiPost('/data/notices', { value: notices });
-  if (result && result.success) {
-    if (cachedData) cachedData.notices = notices;
-    return notices;
-  }
-  // Fallback: localStorage-এ সেভ
-  localStorage.setItem('sgc_notices', JSON.stringify(notices));
-  if (cachedData) cachedData.notices = notices;
+  setLocalData('notices', notices);
+  if (allData) allData.notices = notices;
+  
+  // API-তেও পাঠান (if available)
+  await apiPost('/data/notices', { value: notices });
+  
   return notices;
 }
 
 async function deleteNotice(id) {
-  const result = await apiDelete(`/notice/${id}`);
-  if (result && result.success) {
-    const data = await loadData(true);
-    return data.notices || [];
-  }
-  // Fallback
   let notices = await getNotices();
   notices = notices.filter(n => n.id !== id);
-  localStorage.setItem('sgc_notices', JSON.stringify(notices));
-  if (cachedData) cachedData.notices = notices;
+  setLocalData('notices', notices);
+  if (allData) allData.notices = notices;
+  
+  await apiDelete(`/notice/${id}`);
+  
   return notices;
 }
 
@@ -206,12 +215,9 @@ async function addTeacher(teacher) {
   const teachers = await getTeachers();
   teacher.sl = teachers.length + 1;
   teachers.push(teacher);
-  const result = await apiPost('/data/teachers', { value: teachers });
-  if (result && result.success) {
-    if (cachedData) cachedData.teachers = teachers;
-    return teachers;
-  }
-  if (cachedData) cachedData.teachers = teachers;
+  setLocalData('teachers', teachers);
+  if (allData) allData.teachers = teachers;
+  await apiPost('/data/teachers', { value: teachers });
   return teachers;
 }
 
@@ -219,12 +225,9 @@ async function deleteTeacher(index) {
   let teachers = await getTeachers();
   teachers.splice(index, 1);
   teachers.forEach((t, i) => t.sl = i + 1);
-  const result = await apiPost('/data/teachers', { value: teachers });
-  if (result && result.success) {
-    if (cachedData) cachedData.teachers = teachers;
-    return teachers;
-  }
-  if (cachedData) cachedData.teachers = teachers;
+  setLocalData('teachers', teachers);
+  if (allData) allData.teachers = teachers;
+  await apiPost('/data/teachers', { value: teachers });
   return teachers;
 }
 
@@ -237,24 +240,18 @@ async function getGallery() {
 async function addGalleryItem(item) {
   const gallery = await getGallery();
   gallery.push(item);
-  const result = await apiPost('/data/gallery', { value: gallery });
-  if (result && result.success) {
-    if (cachedData) cachedData.gallery = gallery;
-    return gallery;
-  }
-  if (cachedData) cachedData.gallery = gallery;
+  setLocalData('gallery', gallery);
+  if (allData) allData.gallery = gallery;
+  await apiPost('/data/gallery', { value: gallery });
   return gallery;
 }
 
 async function deleteGallery(index) {
   let gallery = await getGallery();
   gallery.splice(index, 1);
-  const result = await apiPost('/data/gallery', { value: gallery });
-  if (result && result.success) {
-    if (cachedData) cachedData.gallery = gallery;
-    return gallery;
-  }
-  if (cachedData) cachedData.gallery = gallery;
+  setLocalData('gallery', gallery);
+  if (allData) allData.gallery = gallery;
+  await apiPost('/data/gallery', { value: gallery });
   return gallery;
 }
 
@@ -267,85 +264,53 @@ async function getLinks() {
 async function addLink(link) {
   const links = await getLinks();
   links.push(link);
-  const result = await apiPost('/data/importantLinks', { value: links });
-  if (result && result.success) {
-    if (cachedData) cachedData.importantLinks = links;
-    return links;
-  }
-  if (cachedData) cachedData.importantLinks = links;
+  setLocalData('importantLinks', links);
+  if (allData) allData.importantLinks = links;
+  await apiPost('/data/importantLinks', { value: links });
   return links;
 }
 
 async function deleteLink(index) {
   let links = await getLinks();
   links.splice(index, 1);
-  const result = await apiPost('/data/importantLinks', { value: links });
-  if (result && result.success) {
-    if (cachedData) cachedData.importantLinks = links;
-    return links;
-  }
-  if (cachedData) cachedData.importantLinks = links;
+  setLocalData('importantLinks', links);
+  if (allData) allData.importantLinks = links;
+  await apiPost('/data/importantLinks', { value: links });
   return links;
 }
 
 // ===== মেসেজ =====
 async function saveMessage(key, value) {
-  const result = await apiPost(`/data/${key}`, { value });
-  if (result && result.success) {
-    if (cachedData) cachedData[key] = value;
-    return true;
-  }
-  if (cachedData) cachedData[key] = value;
-  return true;
+  setLocalData(key, value);
+  if (allData) allData[key] = value;
+  await apiPost(`/data/${key}`, { value });
 }
 
 // ===== সাইট ইনফো =====
-async function saveSiteInfo(info) {
-  const result = await apiPost('/data/siteInfo', { value: info });
-  if (result && result.success) {
-    if (cachedData) cachedData.siteInfo = info;
-    return true;
-  }
-  if (cachedData) cachedData.siteInfo = info;
-  return true;
-}
-
-// ===== পেজ লোডে ডাটা লোড করুন =====
-document.addEventListener('DOMContentLoaded', () => {
-  loadData();
-});
-
-// ============================================================
-// app.js-এর জন্য হেল্পার ফাংশন (পেজ রেন্ডারিং)
-// নিচের ফাংশনগুলো app.js-এ কল হবে
-// ============================================================
-
-// সাইট ইনফো গেট
 async function getSiteInfo() {
   const data = await loadData();
   return data.siteInfo || {};
 }
 
-// প্রিন্সিপাল ইনফো
+async function saveSiteInfo(info) {
+  setLocalData('siteInfo', info);
+  if (allData) allData.siteInfo = info;
+  await apiPost('/data/siteInfo', { value: info });
+}
+
+// ===== প্রিন্সিপাল ইনফো =====
 async function getPrincipalInfo() {
   const data = await loadData();
   return data.principalInfo || {};
 }
 
-// ভাইস প্রিন্সিপাল ইনফো
 async function getVicePrincipalInfo() {
   const data = await loadData();
   return data.vicePrincipalInfo || {};
 }
 
-// প্রিন্সিপাল মেসেজ
-async function getPrincipalMessage() {
-  const data = await loadData();
-  return data.principalMessage || '';
-}
-
-// ভাইস প্রিন্সিপাল মেসেজ
-async function getVicePrincipalMessage() {
-  const data = await loadData();
-  return data.vicePrincipalMessage || '';
-}
+// ===== ইনিশিয়ালাইজ =====
+initLocalData();
+document.addEventListener('DOMContentLoaded', () => {
+  loadData();
+});
