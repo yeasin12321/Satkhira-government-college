@@ -1,290 +1,179 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>সাতক্ষীরা সরকারি কলেজ | Satkhira Government College</title>
-    
-    <!-- 🎯 FAVICON INTEGRATION -->
-    <link rel="icon" type="image/jpeg" href="logo.jpg">
-    <link rel="shortcut icon" type="image/jpeg" href="logo.jpg">
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts for Bengali -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        body {
-            font-family: 'Hind Siliguri', sans-serif;
-            background-color: #e2e8f0;
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #0284c7;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #0369a1;
-        }
-        .active-tab {
-            background-color: #f0f9ff;
-            border-left: 4px solid #0284c7;
-            padding-left: 1.25rem !important;
-            color: #0284c7;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>সাতক্ষীরা সরকারি কলেজ | Satkhira Government College</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="style.css">
 </head>
-<body class="text-gray-800 min-h-screen flex flex-col">
+<body>
 
-    <!-- Main Container wrapping the whole webpage -->
-    <div class="max-w-7xl mx-auto w-full bg-white shadow-2xl my-3 border border-gray-300 flex-grow flex flex-col">
-        
-        <!-- TOP BANNER (Header Image: 1.jpg) -->
-        <header class="w-full relative select-none">
-            <img src="1.jpg" alt="সাতক্ষীরা সরকারি কলেজ ব্যানার" class="w-full h-auto min-h-[100px] block" onerror="this.onerror=null; this.src='https://placehold.co/1280x200/13207c/ffffff?text=Satkhira+Govt.+College';">
-        </header>
+<!-- ===== HEADER ===== -->
+<div class="header-top">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-3 text-center">
+        <a href="index.html">
+          <img src="https://www.satkhiragovtcollege.edu.bd/wp-content/uploads/2018/02/logo-new-web2.jpg" alt="Satkhira Government College" class="logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iODAiIGhlaWdodD0iODAiIHJ4PSI4IiBmaWxsPSIjZmZkZjJjIi8+PHRleHQgeD0iNDAiIHk9IjQ4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMwMDQwODAiPlNHQzwvdGV4dD48L3N2Zz4=';">
+        </a>
+      </div>
+      <div class="col-md-9">
+        <h1 class="college-name">সাতক্ষীরা সরকারি কলেজ</h1>
+        <p class="college-name-en">Satkhira Government College</p>
+        <p class="college-subtitle">জাতীয় বিশ্ববিদ্যালয় অধিভুক্ত | Est: 1946</p>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <!-- NAVIGATION BAR -->
-        <nav class="bg-[#0ea5e9] text-white flex flex-wrap text-[13px] font-semibold border-y border-sky-600 shadow-sm">
-            <button onclick="showContent('principal-home')" class="px-4 py-2.5 bg-[#0369a1] hover:bg-[#0369a1] border-r border-sky-500 transition focus:outline-none">হোম পেজ</button>
-            <div class="relative group">
-                <button class="px-4 py-2.5 hover:bg-[#0369a1] border-r border-sky-500 transition flex items-center gap-1 focus:outline-none">
-                    কলেজ সম্পর্কিত <i class="fas fa-caret-down text-[10px]"></i>
-                </button>
-                <div class="absolute left-0 hidden group-hover:block bg-white text-gray-800 shadow-lg border border-gray-200 w-48 z-50 py-1">
-                    <button onclick="showContent('history')" class="block w-full text-left px-4 py-2 hover:bg-sky-50 text-xs">কলেজের ইতিহাস</button>
-                    <button onclick="showContent('teachers')" class="block w-full text-left px-4 py-2 hover:bg-sky-50 text-xs">শিক্ষক পরিচিতি</button>
-                </div>
+<!-- ===== NAVIGATION ===== -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link active" href="index.html">হোম পেজ</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">কলেজ সম্পর্কিত</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="at-a-glance.html">এক নজরে</a></li>
+            <li><a class="dropdown-item" href="history.html">কলেজের ইতিহাস</a></li>
+            <li><a class="dropdown-item" href="teachers.html">কর্মরত শিক্ষকদের তালিকা</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">প্রশাসন</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="principal.html">অধ্যক্ষ</a></li>
+            <li><a class="dropdown-item" href="vice-principal.html">উপাধ্যক্ষ</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="academic.html">একাডেমিক</a></li>
+        <li class="nav-item"><a class="nav-link" href="admission.html">ভর্তি</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.html">গ্যালারি</a></li>
+        <li class="nav-item"><a class="nav-link" href="notice-board.html">নোটিশ বোর্ড</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">যোগাযোগ</a></li>
+        <li class="nav-item"><a class="nav-link admin-link" href="admin-login.html">🔑 অ্যাডমিন</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO SECTION ===== -->
+<div class="hero-section">
+  <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="hero-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://www.satkhiragovtcollege.edu.bd/wp-content/uploads/2023/11/IMG_4434.jpeg');">
+          <div class="hero-overlay">
+            <div class="container">
+              <h2>সাতক্ষীরা সরকারি কলেজ</h2>
+              <p>জ্ঞানের আলোয় আলোকিত প্রজন্ম | দক্ষিণাঞ্চলের গর্ব</p>
             </div>
-            <button onclick="showContent('administration')" class="px-4 py-2.5 hover:bg-[#0369a1] border-r border-sky-500 transition focus:outline-none">প্রশাসন</button>
-            <button onclick="showContent('academic')" class="px-4 py-2.5 hover:bg-[#0369a1] border-r border-sky-500 transition focus:outline-none">একাডেমিক</button>
-            <button onclick="showContent('routine')" class="px-4 py-2.5 hover:bg-[#0369a1] border-r border-sky-500 transition focus:outline-none">নোটিশ বোর্ড</button>
-            <button onclick="showContent('gallery')" class="px-4 py-2.5 hover:bg-[#0369a1] border-r border-sky-500 transition focus:outline-none">ফটো গ্যালারি</button>
-            <button onclick="showContent('download')" class="px-4 py-2.5 hover:bg-[#0369a1] border-r border-sky-500 transition focus:outline-none">ডাউনলোড</button>
-            <a href="#college-map" class="px-4 py-2.5 hover:bg-[#0369a1] transition flex items-center">কলেজের ম্যাপ</a>
-        </nav>
-
-        <!-- MAIN LAYOUT (3 Columns) -->
-        <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-4 p-4 flex-grow bg-[#faf9f6]">
-            
-            <!-- LEFT COLUMN: প্রবেশ মেনু -->
-            <aside class="md:col-span-1 lg:col-span-3 space-y-4">
-                <div class="rounded overflow-hidden border border-sky-400 shadow-sm bg-white">
-                    <div class="bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold text-sm text-center py-2 shadow-inner">
-                        <i class="fas fa-bars mr-1.5"></i> প্রবেশ মেনু
-                    </div>
-                    <ul class="text-xs text-gray-700 font-medium" id="sidebar-menu">
-                        <li class="border-b border-dashed border-gray-200">
-                            <button onclick="showContent('routine', this)" class="w-full text-left block px-4 py-2.5 hover:bg-sky-50 hover:pl-5 transition-all flex items-center gap-2">
-                                <i class="fas fa-chevron-right text-[9px] text-sky-500"></i> ক্লাস রুটিন
-                            </button>
-                        </li>
-                        <li class="border-b border-dashed border-gray-200">
-                            <button onclick="showContent('teachers', this)" class="w-full text-left block px-4 py-2.5 hover:bg-sky-50 hover:pl-5 transition-all flex items-center gap-2">
-                                <i class="fas fa-chevron-right text-[9px] text-sky-500"></i> শিক্ষক পরিষদ
-                            </button>
-                        </li>
-                        <li class="border-b border-dashed border-gray-200">
-                            <button onclick="showContent('hsc', this)" class="w-full text-left block px-4 py-2.5 hover:bg-sky-50 hover:pl-5 transition-all flex items-center gap-2">
-                                <i class="fas fa-chevron-right text-[9px] text-sky-500"></i> উচ্চ মাধ্যমিক শাখা
-                            </button>
-                        </li>
-                        <li class="border-b border-dashed border-gray-200">
-                            <button onclick="showContent('degree', this)" class="w-full text-left block px-4 py-2.5 hover:bg-sky-50 hover:pl-5 transition-all flex items-center gap-2">
-                                <i class="fas fa-chevron-right text-[9px] text-sky-500"></i> ডিগ্রি (পাস) শাখা
-                            </button>
-                        </li>
-                        <li class="border-b border-dashed border-gray-200">
-                            <button onclick="showContent('ict', this)" class="w-full text-left block px-4 py-2.5 hover:bg-sky-50 hover:pl-5 transition-all flex items-center gap-2">
-                                <i class="fas fa-chevron-right text-[9px] text-sky-500"></i> আইসিটি ও তথ্য বিভাগ
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-                <a href="https://facebook.com" target="_blank" class="block w-full bg-[#3b5998] hover:bg-[#2d4373] text-white text-center py-2.5 rounded shadow-sm text-xs font-semibold transition flex items-center justify-center gap-2">
-                    <i class="fab fa-facebook-f"></i> ফেসবুকে আমরা
-                </a>
-            </aside>
-
-            <!-- CENTER COLUMN: DYNAMIC CONTENT PANEL -->
-            <main class="md:col-span-2 lg:col-span-6 space-y-4" id="main-content-area">
-                
-                <!-- 1. Default View: অধ্যক্ষ মহোদয়ের বাণী -->
-                <div id="content-principal-home" class="dynamic-content bg-white border border-gray-200 rounded p-4 shadow-sm">
-                    <h2 class="text-lg font-bold text-[#1e293b] text-center border-b pb-2 mb-4">অধ্যক্ষ মহোদয়ের বাণী</h2>
-                    <div class="flex flex-col items-center">
-                        <div class="border-4 border-double border-gray-300 p-1 bg-white shadow-md max-w-[200px] w-full mb-4">
-                            <img src="3.jpg" alt="অধ্যক্ষ মহোদয়" class="w-full h-auto object-cover rounded-sm" onerror="this.onerror=null; this.src='https://placehold.co/200x250/e2e8f0/475569?text=3.jpg';">
-                        </div>
-                        <div class="text-center mb-4">
-                            <!-- 🎯 বানানটি একদম ঠিক করে "প্রফেসর আবুল হাশেম" লিখে দেওয়া হয়েছে -->
-                            <h3 class="font-bold text-gray-900 text-sm">প্রফেসর আবুল হাশেম</h3>
-                            <p class="text-xs text-[#0284c7] font-semibold">অধ্যক্ষ, সাতক্ষীরা সরকারি কলেজ।</p>
-                        </div>
-                        <div class="text-xs text-gray-600 leading-relaxed text-justify space-y-2">
-                            <p>সাতক্ষীরা সরকারি কলেজের অফিসিয়াল ওয়েবসাইটে আপনাদের স্বাগতম। আধুনিক তথ্য ও যোগাযোগ প্রযুক্তির যুগে একটি মানসম্মত ও ডিজিটাল প্রাতিষ্ঠানিক রূপরেখা বিনির্মাণে আমরা আন্তরিকভাবে কাজ করে যাচ্ছি।</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. Dynamic View: ক্লাস রুটিন / নোটিশ বিস্তারিত -->
-                <div id="content-routine" class="dynamic-content hidden bg-white border border-gray-200 rounded p-4 shadow-sm">
-                    <h2 class="text-lg font-bold text-[#1e293b] border-b pb-2 mb-4"><i class="fas fa-calendar-alt text-sky-500 mr-2"></i>ক্লাস রুটিন ও নোটিশ তথ্য</h2>
-                    <table class="w-full text-xs text-left border border-gray-200">
-                        <thead class="bg-gray-100 text-gray-700">
-                            <tr>
-                                <th class="p-2 border">তারিখ</th>
-                                <th class="p-2 border">বিষয়/বিবরণ</th>
-                                <th class="p-2 border">ডাউনলোড</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b">
-                                <td class="p-2 border">13/06/2026</td>
-                                <td class="p-2 border">এইচএসসি ২০২৬ দ্বাদশ শ্রেণীর অর্ধবার্ষিক পরীক্ষার চূড়ান্ত সময়সূচী।</td>
-                                <td class="p-2 border text-center"><a href="2.jpg" download class="text-red-500"><i class="fas fa-file-pdf"></i></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- 3. Dynamic View: শিক্ষক মণ্ডলী -->
-                <div id="content-teachers" class="dynamic-content hidden bg-white border border-gray-200 rounded p-4 shadow-sm">
-                    <h2 class="text-lg font-bold text-[#1e293b] border-b pb-2 mb-4"><i class="fas fa-user-friends text-sky-500 mr-2"></i>শিক্ষক পরিষদ তালিকা</h2>
-                    <div class="grid grid-cols-2 gap-4 text-xs">
-                        <div class="p-3 border rounded bg-gray-50 flex items-center gap-2">
-                            <div class="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0"></div>
-                            <div>
-                                <!-- 🎯 এখানেও নাম ঠিক করা হয়েছে -->
-                                <h4 class="font-bold">প্রফেসর আবুল হাশেম</h4>
-                                <p class="text-gray-500 text-[11px]">অধ্যক্ষ ও বিভাগীয় প্রধান</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. Dynamic View: Colleges History -->
-                <div id="content-history" class="dynamic-content hidden bg-white border border-gray-200 rounded p-4 shadow-sm">
-                    <h2 class="text-lg font-bold text-[#1e293b] border-b pb-2 mb-4">কলেজের সংক্ষিপ্ত ইতিহাস</h2>
-                    <p class="text-xs text-gray-600 leading-relaxed text-justify">১৯৪৬ সালে প্রতিষ্ঠিত সাতক্ষীরা সরকারি কলেজ এই অঞ্চলের উচ্চ শিক্ষার অন্যতম প্রধান কেন্দ্রস্থল।</p>
-                </div>
-
-                <!-- 5. Dynamic View: ডাউনলোড জোন -->
-                <div id="content-download" class="dynamic-content hidden bg-white border border-gray-200 rounded p-4 shadow-sm">
-                    <h2 class="text-lg font-bold text-[#1e293b] border-b pb-2 mb-4"><i class="fas fa-download text-sky-500 mr-2"></i>ডাউনলোড সেন্টার</h2>
-                    <ul class="text-xs space-y-2">
-                        <li class="p-2 bg-gray-50 rounded flex justify-between items-center">
-                            <span>১. ভর্তি ফরম ২০২৬ (অনার্স প্রথম বর্ষ)</span>
-                            <a href="#" class="bg-green-600 text-white px-2 py-1 rounded text-[10px]"><i class="fas fa-download"></i> ফাইল নিন</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </main>
-
-            <!-- RIGHT COLUMN: নোটিশ ও ক্যালেন্ডার -->
-            <aside class="md:col-span-1 lg:col-span-3 space-y-4">
-                <div class="rounded overflow-hidden border border-[#0ea5e9] shadow-sm bg-white">
-                    <div class="bg-[#0ea5e9] text-white font-bold text-sm text-center py-2 shadow-inner">
-                        <i class="fas fa-bell mr-1.5"></i> নোটিশ
-                    </div>
-                    <div class="p-3 space-y-3">
-                        <!-- NOTICE IMAGE: 2.jpg -->
-                        <div onclick="openNoticeModal()" class="border rounded bg-gray-50 p-1 shadow-inner relative group cursor-zoom-in">
-                            <img id="noticeSrcImg" src="2.jpg" alt="বিজ্ঞপ্তি (2.jpg)" class="w-full h-auto max-h-[160px] object-cover rounded" onerror="this.onerror=null; this.src='https://placehold.co/300x150/ef4444/ffffff?text=Notice+(2.jpg)';">
-                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-200 flex items-center justify-center rounded">
-                                <span class="text-[10px] text-white bg-red-600 font-bold px-2 py-1 rounded shadow-md"><i class="fas fa-search-plus mr-1"></i>বড় করে দেখুন</span>
-                            </div>
-                        </div>
-                        <div class="space-y-2.5 text-[11px] text-gray-700">
-                            <div class="border-b pb-2">
-                                <button onclick="showContent('routine')" class="hover:text-sky-600 text-left transition block leading-tight font-semibold">
-                                    ২০২৪-২০২৫ শিক্ষাবর্ষের দ্বাদশ নির্বাচনী পরীক্ষা-২০২৬ এর ফলাফল।
-                                </button>
-                                <span class="text-[9px] text-gray-400 block mt-1"><i class="far fa-calendar-alt"></i> ১৩ জুন, ২০২৬</span>
-                            </div>
-                        </div>
-                        <button onclick="showContent('routine')" class="block w-full bg-[#0284c7] hover:bg-[#0369a1] text-white text-center py-1.5 rounded text-xs font-bold transition shadow-sm focus:outline-none">
-                            সকল নোটিশ...
-                        </button>
-                    </div>
-                </div>
-
-                <!-- CALENDAR -->
-                <div class="border border-gray-200 bg-white rounded p-3 shadow-sm text-center">
-                    <h4 class="text-xs font-bold text-gray-700 border-b pb-1.5 mb-2 flex items-center justify-between">
-                        <span>জুন ২০২৬</span> <span class="text-[9px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded">আজ</span>
-                    </h4>
-                    <div class="grid grid-cols-7 gap-1 text-[10px] font-bold text-gray-500 mb-1">
-                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
-                    </div>
-                    <div class="grid grid-cols-7 gap-1 text-[11px] font-semibold text-gray-700">
-                        <span class="text-gray-300">31</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
-                        <span class="bg-red-600 text-white rounded-full flex items-center justify-center w-5 h-5 mx-auto font-bold">13</span>
-                        <span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
-                    </div>
-                </div>
-            </aside>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <!-- GOOGLE MAP INTEGRATION AREA -->
-        <section id="college-map" class="p-4 bg-gray-50 border-t border-gray-200">
-            <h3 class="text-sm font-bold text-gray-700 mb-2"><i class="fas fa-map-marked-alt text-sky-500 mr-1"></i> গুগল ম্যাপে সাতক্ষীরা সরকারি কলেজ</h3>
-            <div class="w-full h-64 rounded overflow-hidden border shadow-inner">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m4!1s0x39ff5e431a4947d1%3A0x6b7fc69bc3f67a2a!2sSatkhira+Government+College!5m2!1sbn!2sbd" class="w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-        </section>
+<!-- ===== QUICK STATS ===== -->
+<div class="quick-stats">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-3 col-6 stat-item">
+        <h3>১৯৪৬</h3>
+        <p>প্রতিষ্ঠিত</p>
+      </div>
+      <div class="col-md-3 col-6 stat-item">
+        <h3>১৬টি</h3>
+        <p>বিভাগ</p>
+      </div>
+      <div class="col-md-3 col-6 stat-item">
+        <h3>১৭,০০০+</h3>
+        <p>শিক্ষার্থী</p>
+      </div>
+      <div class="col-md-3 col-6 stat-item">
+        <h3>২৭ একর</h3>
+        <p>ক্যাম্পাস</p>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <!-- FOOTER -->
-        <footer class="bg-[#1e293b] text-gray-400 text-xs py-4 px-6 border-t border-gray-700 mt-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-2">
-                <p>&copy; ২০২৬ সাতক্ষীরা সরকারি কলেজ। সর্বস্বত্ব সংরক্ষিত।</p>
-                <div class="flex gap-4">
-                    <button onclick="showContent('principal-home')" class="hover:underline hover:text-white">হোম</button>
-                    <span>|</span>
-                    <a href="#college-map" class="hover:underline hover:text-white">ম্যাপ</a>
-                </div>
-            </div>
-        </footer>
+<!-- ===== MAIN CONTENT ===== -->
+<div class="container mt-4">
+  <div class="row">
+    <!-- LEFT COLUMN -->
+    <div class="col-lg-8">
+
+      <!-- Principal's Message -->
+      <div class="content-box" id="principal-message">
+        <h3 class="box-title">অধ্যক্ষ মহোদয়ের বাণী</h3>
+        <div class="box-content">
+          <div id="principalMsgDisplay"></div>
+          <a href="principal.html" class="read-more">বিস্তারিত...</a>
+        </div>
+      </div>
+
+      <!-- Vice Principal's Message -->
+      <div class="content-box" id="vice-principal-message">
+        <h3 class="box-title">উপাধ্যক্ষ মহোদয়ের বাণী</h3>
+        <div class="box-content">
+          <div id="vicePrincipalMsgDisplay"></div>
+          <a href="vice-principal.html" class="read-more">বিস্তারিত...</a>
+        </div>
+      </div>
+
+      <!-- Notice Board -->
+      <div class="content-box">
+        <h3 class="box-title">নোটিশ বোর্ড</h3>
+        <div class="box-content">
+          <ul class="notice-list" id="homeNoticeList"></ul>
+          <a href="notice-board.html" class="read-more">সকল নোটিশ...</a>
+        </div>
+      </div>
     </div>
 
-    <!-- IMAGE ZOOM MODAL -->
-    <div id="noticeModal" class="fixed inset-0 bg-black/80 z-[100] hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <button onclick="closeNoticeModal()" class="absolute top-4 right-4 text-white hover:text-red-500 text-3xl font-bold focus:outline-none">&times;</button>
-        <div class="relative max-w-4xl max-h-[90vh] bg-white rounded-lg p-1 overflow-auto" onclick="event.stopPropagation()">
-            <img id="modalImg" src="2.jpg" alt="Notice Big" class="max-w-full h-auto rounded block" onerror="this.onerror=null; this.src='https://placehold.co/800x1000/ef4444/ffffff?text=Notice+Image+Missing';">
-        </div>
+    <!-- RIGHT SIDEBAR -->
+    <div class="col-lg-4">
+      <!-- Calendar -->
+      <div class="sidebar-box">
+        <h4 class="sidebar-title">ক্যালেন্ডার</h4>
+        <div class="calendar-widget" id="calendarWidget"></div>
+      </div>
+
+      <!-- Important Links -->
+      <div class="sidebar-box">
+        <h4 class="sidebar-title">গুরুত্বপূর্ণ লিংক</h4>
+        <ul class="sidebar-links" id="importantLinks"></ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="sidebar-box">
+        <h4 class="sidebar-title">যোগাযোগ ও ঠিকানা</h4>
+        <div class="contact-info" id="contactInfo"></div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <script>
-        function showContent(sectionId, element = null) {
-            const contents = document.querySelectorAll('.dynamic-content');
-            contents.forEach(content => content.classList.add('hidden'));
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <p>&copy; <span id="footerYear"></span> Satkhira Government College | সর্বস্বত্ব সংরক্ষিত</p>
+      </div>
+    </div>
+  </div>
+</footer>
 
-            const target = document.getElementById('content-' + sectionId);
-            if(target) { target.classList.remove('hidden'); }
-
-            if(element) {
-                const buttons = document.querySelectorAll('#sidebar-menu button');
-                buttons.forEach(btn => btn.classList.remove('active-tab'));
-                element.classList.add('active-tab');
-            }
-        }
-
-        const modal = document.getElementById('noticeModal');
-        function openNoticeModal() { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
-        function closeNoticeModal() { modal.classList.add('hidden'); document.body.style.overflow = 'auto'; }
-        modal.addEventListener('click', closeNoticeModal);
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

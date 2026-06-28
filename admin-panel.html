@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>অ্যাডমিন প্যানেল | সাতক্ষীরা সরকারি কলেজ</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"><link rel="stylesheet" href="style.css">
+<style>.admin-section{display:none}.admin-section.active{display:block}.thumb-sm{width:40px;height:40px;border-radius:50%;object-fit:cover}</style>
+</head><body>
+<div class="header-top" style="padding:8px 0;"><div class="container"><h4 style="margin:0;color:#fff;">⚙️ অ্যাডমিন প্যানেল - সাতক্ষীরা সরকারি কলেজ</h4></div></div>
+
+<div class="container mt-3">
+  <div class="admin-panel">
+    <div class="admin-header d-flex justify-content-between align-items-center">
+      <h4 style="margin:0;">কন্টেন্ট ম্যানেজমেন্ট সিস্টেম</h4>
+      <a href="index.html" style="color:#ffcc00;font-size:14px;">ওয়েবসাইট দেখুন →</a>
+    </div>
+    <div class="admin-nav">
+      <a href="#" onclick="showSection('notices',this)" class="active">📋 নোটিশ</a>
+      <a href="#" onclick="showSection('teachers',this)">👨‍🏫 শিক্ষক</a>
+      <a href="#" onclick="showSection('gallery',this)">🖼️ গ্যালারি</a>
+      <a href="#" onclick="showSection('messages',this)">💬 বাণী</a>
+      <a href="#" onclick="showSection('links',this)">🔗 লিংক</a>
+      <a href="#" onclick="showSection('siteinfo',this)">🏫 সাইট তথ্য</a>
+      <a href="#" onclick="adminLogout()" style="color:#cc3300;">🚪 লগআউট</a>
+    </div>
+    <div class="admin-body">
+
+      <!-- SUCCESS MESSAGE -->
+      <div class="success-msg" id="adminSuccess"></div>
+
+      <!-- ====== NOTICES SECTION ====== -->
+      <div class="admin-section active" id="sec-notices">
+        <h5>নোটিশ যোগ করুন</h5>
+        <div class="form-row">
+          <div class="form-group">
+            <label>তারিখ</label>
+            <input type="text" id="noticeDate" class="form-control" placeholder="e.g. March 2, 2026">
+          </div>
+          <div class="form-group" style="flex:3;">
+            <label>নোটিশের শিরোনাম</label>
+            <input type="text" id="noticeTitle" class="form-control" placeholder="নোটিশের শিরোনাম">
+          </div>
+          <div class="form-group">
+            <label>লিংক (optional)</label>
+            <input type="text" id="noticeLink" class="form-control" placeholder="PDF বা ফাইল লিংক">
+          </div>
+        </div>
+        <button onclick="addAdminNotice()" class="btn-admin">➕ নোটিশ যোগ করুন</button>
+        <hr>
+        <h5>বর্তমান নোটিশসমূহ</h5>
+        <div class="table-wrap" id="adminNoticeList"></div>
+      </div>
+
+      <!-- ====== TEACHERS SECTION ====== -->
+      <div class="admin-section" id="sec-teachers">
+        <h5>শিক্ষক যোগ করুন</h5>
+        <div class="form-row">
+          <div class="form-group"><label>নাম</label><input type="text" id="tName" class="form-control"></div>
+          <div class="form-group"><label>পদবী</label><input type="text" id="tDesig" class="form-control"></div>
+          <div class="form-group"><label>বিসিএস</label><input type="text" id="tBCS" class="form-control" placeholder="e.g. ১৪শ"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>বিষয়</label><input type="text" id="tSubject" class="form-control"></div>
+          <div class="form-group"><label>মোবাইল</label><input type="text" id="tPhone" class="form-control"></div>
+          <div class="form-group"><label>ছবির URL</label><input type="text" id="tPhoto" class="form-control"></div>
+        </div>
+        <button onclick="addAdminTeacher()" class="btn-admin">➕ শিক্ষক যোগ করুন</button>
+        <hr>
+        <h5>বর্তমান শিক্ষক তালিকা</h5>
+        <div class="table-wrap" id="adminTeacherList"></div>
+      </div>
+
+      <!-- ====== GALLERY SECTION ====== -->
+      <div class="admin-section" id="sec-gallery">
+        <h5>ছবি যোগ করুন</h5>
+        <div class="form-row">
+          <div class="form-group" style="flex:3;"><label>ছবির URL</label><input type="text" id="gSrc" class="form-control"></div>
+          <div class="form-group"><label>ক্যাপশন</label><input type="text" id="gCaption" class="form-control"></div>
+        </div>
+        <button onclick="addAdminGallery()" class="btn-admin">➕ ছবি যোগ করুন</button>
+        <hr>
+        <h5>গ্যালারি</h5>
+        <div id="adminGalleryList"></div>
+      </div>
+
+      <!-- ====== MESSAGES SECTION ====== -->
+      <div class="admin-section" id="sec-messages">
+        <h5>অধ্যক্ষের বাণী</h5>
+        <div class="form-group"><textarea id="principalMsg" class="form-control" rows="6"></textarea></div>
+        <button onclick="saveAdminMessage('principalMessage','principalMsg')" class="btn-admin">💾 অধ্যক্ষের বাণী সংরক্ষণ করুন</button>
+        <hr>
+        <h5>উপাধ্যক্ষের বাণী</h5>
+        <div class="form-group"><textarea id="vicePrincipalMsg" class="form-control" rows="6"></textarea></div>
+        <button onclick="saveAdminMessage('vicePrincipalMessage','vicePrincipalMsg')" class="btn-admin">💾 উপাধ্যক্ষের বাণী সংরক্ষণ করুন</button>
+      </div>
+
+      <!-- ====== LINKS SECTION ====== -->
+      <div class="admin-section" id="sec-links">
+        <h5>লিংক যোগ করুন</h5>
+        <div class="form-row">
+          <div class="form-group"><label>নাম</label><input type="text" id="linkTitle" class="form-control"></div>
+          <div class="form-group"><label>URL</label><input type="text" id="linkUrl" class="form-control"></div>
+        </div>
+        <button onclick="addAdminLink()" class="btn-admin">➕ লিংক যোগ করুন</button>
+        <hr>
+        <h5>বর্তমান লিংকসমূহ</h5>
+        <div id="adminLinkList"></div>
+      </div>
+
+      <!-- ====== SITE INFO ====== -->
+      <div class="admin-section" id="sec-siteinfo">
+        <h5>সাইটের তথ্য</h5>
+        <div class="form-row">
+          <div class="form-group"><label>কলেজের নাম</label><input type="text" id="siName" class="form-control"></div>
+          <div class="form-group"><label>ইংরেজি নাম</label><input type="text" id="siNameEn" class="form-control"></div>
+        </div>
+        <div class="form-group"><label>ঠিকানা</label><input type="text" id="siAddress" class="form-control"></div>
+        <div class="form-row">
+          <div class="form-group"><label>অফিস ফোন</label><input type="text" id="siPhoneOff" class="form-control"></div>
+          <div class="form-group"><label>অধ্যক্ষ ফোন</label><input type="text" id="siPhonePrin" class="form-control"></div>
+          <div class="form-group"><label>উপাধ্যক্ষ ফোন</label><input type="text" id="siPhoneVP" class="form-control"></div>
+        </div>
+        <div class="form-group"><label>ই-মেইল</label><input type="text" id="siEmail" class="form-control"></div>
+        <button onclick="saveSiteInfo()" class="btn-admin">💾 তথ্য সংরক্ষণ করুন</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="data.js"></script>
+<script>
+// --- AUTH CHECK ---
+if (localStorage.getItem('sgc_admin') !== 'true') { window.location.href = 'admin-login.html'; }
+
+// --- SECTION SWITCHING ---
+function showSection(id, el) {
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderAdminSections();
+}
+
+// --- NOTICES ---
+function renderAdminNotices() {
+  const list = document.getElementById('adminNoticeList');
+  if (!list) return;
+  const notices = getNotices();
+  if (notices.length === 0) { list.innerHTML = '<p style="color:#888;">কোনো নোটিশ নেই</p>'; return; }
+  list.innerHTML = `<table class="data-table"><thead><tr><th>তারিখ</th><th>শিরোনাম</th><th>অ্যাকশন</th></tr></thead><tbody>
+    ${notices.map((n,i) => `<tr><td>${n.date}</td><td>${n.title}</td><td><button class="btn-danger-admin" onclick="deleteAdminNotice(${n.id})">🗑️ মুছুন</button></td></tr>`).join('')}
+  </tbody></table>`;
+}
+
+function addAdminNotice() {
+  const date = document.getElementById('noticeDate').value.trim();
+  const title = document.getElementById('noticeTitle').value.trim();
+  const link = document.getElementById('noticeLink').value.trim() || '#';
+  if (!date || !title) { alert('তারিখ এবং শিরোনাম দিন'); return; }
+  addNotice({ date, title, link });
+  document.getElementById('noticeDate').value = '';
+  document.getElementById('noticeTitle').value = '';
+  document.getElementById('noticeLink').value = '';
+  showAdminSuccess('নোটিশ যোগ করা হয়েছে!');
+  renderAdminNotices();
+}
+
+function deleteAdminNotice(id) {
+  if (!confirm('নিশ্চিতভাবে মুছবেন?')) return;
+  deleteNotice(id);
+  showAdminSuccess('নোটিশ মুছে ফেলা হয়েছে!');
+  renderAdminNotices();
+}
+
+// --- TEACHERS ---
+function renderAdminTeachers() {
+  const list = document.getElementById('adminTeacherList');
+  if (!list) return;
+  const teachers = getTeachers();
+  if (teachers.length === 0) { list.innerHTML = '<p style="color:#888;">কোনো শিক্ষক নেই</p>'; return; }
+  list.innerHTML = `<table class="data-table"><thead><tr><th>নাম</th><th>পদবী</th><th>বিষয়</th><th>অ্যাকশন</th></tr></thead><tbody>
+    ${teachers.map((t,i) => `<tr><td>${t.name}</td><td>${t.designation}</td><td>${t.subject}</td><td><button class="btn-danger-admin" onclick="deleteAdminTeacher(${i})">🗑️ মুছুন</button></td></tr>`).join('')}
+  </tbody></table>`;
+}
+
+function addAdminTeacher() {
+  const name = document.getElementById('tName').value.trim();
+  const desig = document.getElementById('tDesig').value.trim();
+  const bcs = document.getElementById('tBCS').value.trim();
+  const subject = document.getElementById('tSubject').value.trim();
+  const phone = document.getElementById('tPhone').value.trim();
+  const photo = document.getElementById('tPhoto').value.trim();
+  if (!name || !desig) { alert('নাম এবং পদবী দিন'); return; }
+  addTeacher({ name, designation: desig, bcs, subject, phone, photo });
+  ['tName','tDesig','tBCS','tSubject','tPhone','tPhoto'].forEach(id => document.getElementById(id).value = '');
+  showAdminSuccess('শিক্ষক যোগ করা হয়েছে!');
+  renderAdminTeachers();
+}
+
+function deleteAdminTeacher(index) {
+  if (!confirm('নিশ্চিতভাবে মুছবেন?')) return;
+  deleteTeacher(index);
+  showAdminSuccess('শিক্ষক মুছে ফেলা হয়েছে!');
+  renderAdminTeachers();
+}
+
+// --- GALLERY ---
+function renderAdminGallery() {
+  const list = document.getElementById('adminGalleryList');
+  if (!list) return;
+  const gallery = getGallery();
+  if (gallery.length === 0) { list.innerHTML = '<p style="color:#888;">কোনো ছবি নেই</p>'; return; }
+  list.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:10px;">${gallery.map((item,i) => `
+    <div style="position:relative;width:150px;">
+      <img src="${item.src}" style="width:150px;height:100px;object-fit:cover;border-radius:5px;" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9Ijc1IiB5PSI1MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM5OTkiPkVycm9yPC90ZXh0Pjwvc3ZnPg==">
+      <p style="font-size:11px;margin:3px 0;">${item.caption}</p>
+      <button class="btn-danger-admin" onclick="deleteAdminGallery(${i})" style="font-size:11px;">🗑️</button>
+    </div>`).join('')}</div>`;
+}
+
+function addAdminGallery() {
+  const src = document.getElementById('gSrc').value.trim();
+  const caption = document.getElementById('gCaption').value.trim();
+  if (!src) { alert('ছবির URL দিন'); return; }
+  addGalleryItem({ src, caption });
+  document.getElementById('gSrc').value = '';
+  document.getElementById('gCaption').value = '';
+  showAdminSuccess('ছবি যোগ করা হয়েছে!');
+  renderAdminGallery();
+}
+
+function deleteAdminGallery(index) {
+  if (!confirm('নিশ্চিতভাবে মুছবেন?')) return;
+  deleteGallery(index);
+  showAdminSuccess('ছবি মুছে ফেলা হয়েছে!');
+  renderAdminGallery();
+}
+
+// --- MESSAGES ---
+function loadAdminMessages() {
+  const pm = document.getElementById('principalMsg');
+  const vpm = document.getElementById('vicePrincipalMsg');
+  if (pm) pm.value = getData('principalMessage');
+  if (vpm) vpm.value = getData('vicePrincipalMessage');
+}
+
+function saveAdminMessage(key, elId) {
+  const val = document.getElementById(elId).value;
+  setData(key, val);
+  showAdminSuccess('বাণী সংরক্ষিত হয়েছে!');
+}
+
+// --- LINKS ---
+function renderAdminLinks() {
+  const list = document.getElementById('adminLinkList');
+  if (!list) return;
+  const links = getLinks();
+  if (links.length === 0) { list.innerHTML = '<p style="color:#888;">কোনো লিংক নেই</p>'; return; }
+  list.innerHTML = `<ul style="list-style:none;padding:0;">${links.map((l,i) => `
+    <li style="padding:8px 0;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;">
+      <span>${l.title}</span>
+      <button class="btn-danger-admin" onclick="deleteAdminLink(${i})">🗑️ মুছুন</button>
+    </li>`).join('')}</ul>`;
+}
+
+function addAdminLink() {
+  const title = document.getElementById('linkTitle').value.trim();
+  const url = document.getElementById('linkUrl').value.trim();
+  if (!title || !url) { alert('নাম এবং URL দিন'); return; }
+  addLink({ title, url });
+  document.getElementById('linkTitle').value = '';
+  document.getElementById('linkUrl').value = '';
+  showAdminSuccess('লিংক যোগ করা হয়েছে!');
+  renderAdminLinks();
+}
+
+function deleteAdminLink(index) {
+  if (!confirm('নিশ্চিতভাবে মুছবেন?')) return;
+  deleteLink(index);
+  showAdminSuccess('লিংক মুছে ফেলা হয়েছে!');
+  renderAdminLinks();
+}
+
+// --- SITE INFO ---
+function loadSiteInfo() {
+  const info = getData('siteInfo');
+  ['siName','siNameEn','siAddress','siPhoneOff','siPhonePrin','siPhoneVP','siEmail'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = info[id.replace('si','').replace(/^./, c => ({
+      'N':'name','E':'nameEn','A':'address','P':'phoneOff','p':'phonePrincipal','p2':'phoneVicePrincipal','E2':'email'
+    }[c] || c))] || info[id.replace('si', m => ({'Name':'name','NameEn':'nameEn','Address':'address','PhoneOff':'phoneOffice','PhonePrin':'phonePrincipal','PhoneVP':'phoneVicePrincipal','Email':'email'})[m])] || '';
+  });
+}
+
+function saveSiteInfo() {
+  const info = getData('siteInfo');
+  info.name = document.getElementById('siName').value || info.name;
+  info.nameEn = document.getElementById('siNameEn').value || info.nameEn;
+  info.address = document.getElementById('siAddress').value || info.address;
+  info.phoneOffice = document.getElementById('siPhoneOff').value || info.phoneOffice;
+  info.phonePrincipal = document.getElementById('siPhonePrin').value || info.phonePrincipal;
+  info.phoneVicePrincipal = document.getElementById('siPhoneVP').value || info.phoneVicePrincipal;
+  info.email = document.getElementById('siEmail').value || info.email;
+  setData('siteInfo', info);
+  showAdminSuccess('সাইটের তথ্য সংরক্ষিত হয়েছে!');
+}
+
+// --- ADMIN LOGOUT ---
+function adminLogout() {
+  localStorage.removeItem('sgc_admin');
+  window.location.href = 'admin-login.html';
+}
+
+// --- UTILITY ---
+function showAdminSuccess(msg) {
+  const el = document.getElementById('adminSuccess');
+  el.textContent = msg;
+  el.style.display = 'block';
+  setTimeout(() => { el.style.display = 'none'; }, 3000);
+}
+
+function renderAdminSections() {
+  renderAdminNotices();
+  renderAdminTeachers();
+  renderAdminGallery();
+  renderAdminLinks();
+}
+
+// Load data on page load
+document.addEventListener('DOMContentLoaded', function() {
+  renderAdminSections();
+  loadAdminMessages();
+  loadSiteInfo();
+});
+</script>
+</body></html>
